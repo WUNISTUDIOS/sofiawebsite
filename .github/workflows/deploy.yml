@@ -32,11 +32,9 @@ jobs:
 
       - name: Build
         run: npm run build
-        env:
-          # Serves the site at wunistudios.github.io/sofiawebsite/. Remove
-          # this line (and the basePath in next.config.ts will fall back to
-          # "") once a custom domain is configured via a CNAME file.
-          NEXT_PUBLIC_BASE_PATH: /sofiawebsite
+        # No NEXT_PUBLIC_BASE_PATH: the site is served from the root of the
+        # custom domain (diabloconvestido.online), configured via GitHub
+        # Pages settings (repo Settings → Pages → Custom domain).
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
