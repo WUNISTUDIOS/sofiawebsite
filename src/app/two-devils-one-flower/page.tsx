@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useProjectToggle } from "@/components/ProjectNav";
+import { withBasePath } from "@/lib/basePath";
 
 const IMAGES = [
   { src: "/images/tdof_2.webp", alt: "Two Devils One Flower 2" },
@@ -21,20 +21,11 @@ export default function TwoDevilsOneFlower() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center py-4 px-8">
-        <Link
-          href="/about"
-          className="font-display text-white text-[clamp(1rem,3vw,2.25rem)] tracking-tight"
-        >
-          Sofía Loose Martínez de Castro
-        </Link>
-      </header>
-
       <div className="fixed inset-0 flex bg-black">
         {IMAGES.map((img, i) => (
           <div key={i} className="relative flex-1 h-full">
             <Image
-              src={img.src}
+              src={withBasePath(img.src)}
               alt={img.alt}
               fill
               className="object-cover"
@@ -59,7 +50,7 @@ export default function TwoDevilsOneFlower() {
       <AnimatePresence>
         {revealed && (
           <motion.div
-            className="fixed top-16 bottom-16 left-0 right-0 z-50 flex items-center justify-center px-[8vw] pointer-events-none"
+            className="fixed top-40 bottom-16 left-0 right-0 z-50 flex items-center justify-center overflow-y-auto px-[8vw] py-8 pointer-events-none"
             {...fade}
             transition={fadeTransition}
           >

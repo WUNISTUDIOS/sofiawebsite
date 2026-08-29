@@ -7,7 +7,6 @@ import {
   useMemo,
   useRef,
 } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 interface ToggleCtxValue {
@@ -54,27 +53,17 @@ export function ProjectNav({ projects }: { projects: Project[] }) {
   const pathname = usePathname();
   const { fire } = useContext(ToggleCtx);
 
+  const current = projects.find(({ href }) => href === pathname);
+  if (!current) return null;
+
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center gap-12 py-4 px-8">
-      {projects.map(({ label, href }) =>
-        pathname === href ? (
-          <button
-            key={href}
-            onClick={fire}
-            className="font-display text-white text-[clamp(0.875rem,2.5vw,1.75rem)] tracking-tight underline underline-offset-4 decoration-1"
-          >
-            {label}
-          </button>
-        ) : (
-          <Link
-            key={href}
-            href={href}
-            className="font-display text-white text-[clamp(0.875rem,2.5vw,1.75rem)] tracking-tight"
-          >
-            {label}
-          </Link>
-        )
-      )}
-    </footer>
+    <nav className="fixed top-20 left-0 right-0 z-50 flex items-center justify-center gap-12 py-4 px-8">
+      <button
+        onClick={fire}
+        className="font-display text-white text-[clamp(0.875rem,2.5vw,1.75rem)] tracking-tight"
+      >
+        {current.label}
+      </button>
+    </nav>
   );
 }

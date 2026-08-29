@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# images: pngs are raw exports, never tracked — convert to webp before committing
+*.png
+
+# video: raw high-bitrate source exports, never tracked — compressed .webm versions are committed instead
+/public/video/hookuppostapocaliptico final.mp4
+/public/video/vertical.mp4

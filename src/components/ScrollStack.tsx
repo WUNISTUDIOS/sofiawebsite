@@ -1,16 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
-import { withBasePath } from "@/lib/basePath";
 
-export interface Slide {
-  src: string;
-  alt: string;
-  objectFit?: "cover" | "contain";
-  type?: "image" | "video";
-}
+// Same wheel-driven, snap-to-slide mechanic as GallerySlider — accumulated
+// deltaY against a threshold, one vertical slide transition at a time, with
+// an animation lock — generalized to arbitrary slide content instead of
+// just gallery images.
 
 const variants = {
   enter: (dir: number) => ({ y: `${dir * 100}vh` }),
@@ -22,7 +18,7 @@ const TRANSITION = { duration: 0.75, ease: [0.76, 0, 0.24, 1] as const };
 const THRESHOLD = 50;
 const LOCK_MS = 850;
 
-export default function GallerySlider({ slides }: { slides: Slide[] }) {
+export default function ScrollStack({ slides }: { slides: ReactNode[] }) {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const currentRef = useRef(0);
@@ -84,50 +80,9 @@ export default function GallerySlider({ slides }: { slides: Slide[] }) {
           transition={TRANSITION}
           className="absolute inset-0"
         >
-          {slides[current].type === "video" ? (
-            <video
-              src={withBasePath(slides[current].src)}
-              className="h-full w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
-          ) : (slides[current].objectFit ?? "cover") === "contain" ? (
-            <>
-              <Image
-                src={withBasePath(slides[current].src)}
-                alt=""
-                fill
-                aria-hidden
-                className="object-cover scale-110 blur-3xl brightness-50"
-                sizes="100vw"
-              />
-              <Image
-                src={withBasePath(slides[current].src)}
-                alt={slides[current].alt}
-                fill
-                className="object-contain"
-                priority={current === 0}
-                sizes="100vw"
-              />
-            </>
-          ) : (
-            <Image
-              src={withBasePath(slides[current].src)}
-              alt={slides[current].alt}
-              fill
-              className="object-cover"
-              priority={current === 0}
-              sizes="100vw"
-            />
-          )}
+          {slides[current]}
         </motion.div>
       </AnimatePresence>
-
-      <div className="absolute bottom-6 right-8 z-10 font-display text-white/50 text-sm tabular-nums select-none">
-        {current + 1} / {slides.length}
-      </div>
     </div>
   );
 }

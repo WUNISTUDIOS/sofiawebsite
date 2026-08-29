@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import GallerySlider, { Slide } from "@/components/GallerySlider";
 import { useProjectToggle } from "@/components/ProjectNav";
@@ -23,15 +22,6 @@ export default function Descent() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center py-4 px-8">
-        <Link
-          href="/about"
-          className="font-display text-white text-[clamp(1rem,3vw,2.25rem)] tracking-tight"
-        >
-          Sofía Loose Martínez de Castro
-        </Link>
-      </header>
-
       <GallerySlider slides={SLIDES} />
 
       <AnimatePresence>
@@ -48,7 +38,7 @@ export default function Descent() {
       <AnimatePresence>
         {revealed && (
           <motion.div
-            className="fixed top-16 bottom-16 left-0 right-0 z-50 overflow-y-auto px-[8vw] py-8 pointer-events-none"
+            className="fixed top-40 bottom-16 left-0 right-0 z-50 overflow-y-auto px-[8vw] py-8 pointer-events-none"
             {...fade}
             transition={fadeTransition}
           >

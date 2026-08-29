@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import { ProjectNavProvider, ProjectNav, Project } from "@/components/ProjectNav";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 
 const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
@@ -39,8 +41,10 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-black text-white">
         <ProjectNavProvider>
+          <SiteHeader />
           <ProjectNav projects={PROJECTS} />
           {children}
+          <SiteFooter />
         </ProjectNavProvider>
       </body>
     </html>

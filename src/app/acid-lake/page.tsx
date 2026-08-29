@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import GallerySlider, { Slide } from "@/components/GallerySlider";
 import { useProjectToggle } from "@/components/ProjectNav";
 
 const SLIDES: Slide[] = [
+  { src: "/video/MAH05150.mp4", alt: "Acid Lake behind the scenes", type: "video" },
   { src: "/images/acid_1.webp", alt: "Acid Lake 1" },
   { src: "/images/acid_2.webp", alt: "Acid Lake 2" },
   { src: "/images/acid_3.webp", alt: "Acid Lake 3" },
@@ -22,15 +22,6 @@ export default function AcidLake() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center py-4 px-8">
-        <Link
-          href="/about"
-          className="font-display text-white text-[clamp(1rem,3vw,2.25rem)] tracking-tight"
-        >
-          Sofía Loose Martínez de Castro
-        </Link>
-      </header>
-
       <GallerySlider slides={SLIDES} />
 
       <AnimatePresence>
@@ -47,7 +38,7 @@ export default function AcidLake() {
       <AnimatePresence>
         {revealed && (
           <motion.div
-            className="fixed top-16 bottom-16 left-0 right-0 z-50 flex items-center justify-center overflow-y-auto px-[8vw] py-8 pointer-events-none"
+            className="fixed top-40 bottom-16 left-0 right-0 z-50 flex items-center justify-center overflow-y-auto px-[8vw] py-8 pointer-events-none"
             {...fade}
             transition={fadeTransition}
           >
@@ -55,6 +46,12 @@ export default function AcidLake() {
               className="pointer-events-auto text-center font-display text-white text-[clamp(0.875rem,1.32vw,1.5rem)] leading-relaxed space-y-6 max-w-4xl mx-auto"
               onClick={(e) => e.stopPropagation()}
             >
+              <p>
+                The costume and makeup were something I did entirely from
+                scratch — the creatures are meant to represent the two
+                figures within The Devil tarot card of the Marseille and J.
+                White decks.
+              </p>
               <p>
                 This artwork rises as a collective interpretation of The Devil
                 tarot card, drawing inspiration primarily from the Marseille and
