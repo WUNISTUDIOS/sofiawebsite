@@ -49,11 +49,20 @@ export interface Project {
   href: string;
 }
 
+// next.config.ts sets trailingSlash: true, so usePathname() returns paths
+// like "/descent/" while PROJECTS hrefs are written as "/descent" — strip
+// trailing slashes before comparing so the match isn't sensitive to that.
+const stripTrailingSlash = (path: string) =>
+  path.length > 1 ? path.replace(/\/+$/, "") : path;
+
 export function ProjectNav({ projects }: { projects: Project[] }) {
   const pathname = usePathname();
   const { fire } = useContext(ToggleCtx);
 
-  const current = projects.find(({ href }) => href === pathname);
+  const normalizedPathname = stripTrailingSlash(pathname);
+  const current = projects.find(
+    ({ href }) => stripTrailingSlash(href) === normalizedPathname
+  );
   if (!current) return null;
 
   return (
