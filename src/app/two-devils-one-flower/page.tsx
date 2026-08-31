@@ -1,15 +1,13 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import GallerySlider, { Slide } from "@/components/GallerySlider";
 import { useProjectToggle } from "@/components/ProjectNav";
-import { withBasePath } from "@/lib/basePath";
 
-const IMAGES = [
-  { src: "/images/tdof_2.webp", alt: "Two Devils One Flower 2" },
-  { src: "/images/tdof_4.webp", alt: "Two Devils One Flower 4" },
-  { src: "/images/tdof_3.webp", alt: "Two Devils One Flower 3" },
+const SLIDES: Slide[] = [
+  { src: "/images/horizontal_opcion3-Recovered.webp", alt: "Two Devils One Flower 1" },
+  { src: "/images/horizontal_opcion4-Recovered.webp", alt: "Two Devils One Flower 2" },
 ];
 
 const fade = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } };
@@ -21,20 +19,7 @@ export default function TwoDevilsOneFlower() {
 
   return (
     <>
-      <div className="fixed inset-0 flex bg-black">
-        {IMAGES.map((img, i) => (
-          <div key={i} className="relative flex-1 h-full">
-            <Image
-              src={withBasePath(img.src)}
-              alt={img.alt}
-              fill
-              className="object-cover"
-              priority={i === 0}
-              sizes="33vw"
-            />
-          </div>
-        ))}
-      </div>
+      <GallerySlider slides={SLIDES} />
 
       <AnimatePresence>
         {revealed && (
@@ -55,7 +40,7 @@ export default function TwoDevilsOneFlower() {
             transition={fadeTransition}
           >
             <div
-              className="pointer-events-auto text-center font-display text-white text-[clamp(0.875rem,1.32vw,1.5rem)] leading-relaxed space-y-4 max-w-3xl"
+              className="pointer-events-auto text-left font-display text-white text-[1.75rem] sm:text-[clamp(0.875rem,1.32vw,1.5rem)] leading-relaxed space-y-4 max-w-3xl"
               onClick={(e) => e.stopPropagation()}
             >
               <p>

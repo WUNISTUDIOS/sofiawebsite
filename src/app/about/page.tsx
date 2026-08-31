@@ -17,24 +17,19 @@ export default function About() {
       <div className="absolute inset-0 z-10 bg-black/50" />
 
       <div className="absolute inset-0 z-20 flex items-center justify-center overflow-y-auto px-[8vw] py-24">
-        <div className="mx-auto max-w-3xl space-y-6 text-center font-display text-white text-[clamp(0.875rem,1.32vw,1.5rem)] leading-relaxed">
+        <div className="mx-auto max-w-3xl space-y-6 text-left font-display text-white text-[1.75rem] sm:text-[clamp(0.875rem,1.32vw,1.5rem)] leading-relaxed">
           <p>
-            This webpage is coming out right after the first solar eclipse in
-            Leo of 2026, in the month of my 30th birthday. And I would like to
-            share with you how much of an achievement this was. Those who know
-            me will know how hard it is to keep all the things I do
-            documented and especially well organized, hehe. Big hug coming to
-            all my ADHD buddies! But yea, the organization was a challenge —
-            ask Denzel Arthur, the big talent behind this cool ass website,
-            who patiently walked me through this! Bless you, Denzel, I will
-            be forever grateful for this page.
+            I have dedicated a big part of my life to performative arts.
+            Today I mostly do stage and costume, though I&rsquo;ve also
+            directed, performed, written. I hold a degree in Theatre Studies
+            and stage design. I&rsquo;m crafty, I build with my hands, I
+            paint, I tattoo. I think of art as a sacred form of human ritual,
+            and of rituals as inherently political.
           </p>
-          <p>
-            Anyways, I&rsquo;m super excited to show some of my work with you
-            here — click yourself around. But yea, about me&hellip; I do
-            stage and costume, I tattoo, I edit, I write? Sometimes I direct.
-            I have been dedicating a big part of my life to performative
-            arts. I am crafty, love building with my hands.
+         <p>
+            Creating with people I admire is my favorite way of experiencing
+            power, this page is full of that. So, welcome {"<3"} please click
+            yourself around.
           </p>
         </div>
       </div>

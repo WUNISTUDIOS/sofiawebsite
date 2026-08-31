@@ -42,27 +42,24 @@ export default function TheBestMirrorsAreThose() {
             transition={fadeTransition}
           >
             <div
-              className="pointer-events-auto text-center font-display text-white text-[clamp(0.875rem,1.32vw,1.5rem)] leading-relaxed space-y-6 max-w-4xl mx-auto"
+              className="pointer-events-auto text-left font-display text-white text-[1.75rem] sm:text-[clamp(0.875rem,1.32vw,1.5rem)] leading-relaxed space-y-6 max-w-4xl mx-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <p>
-                Masks for the photographic project &ldquo;Two Devils and a
-                Flower&rdquo; of Cesarina Guerrero, a multidisciplinary artist
-                from the Dominican Republic whose tender and truthful
-                storytelling I deeply appreciate. The devils represent her and
-                her brother. I took pictures of my masks and then played with
-                different backgrounds for them with photoshop. These were the
-                results. The masks remained untouched in the editing.
+                Performance/Installation that I presented at Mahalla during
+                Berlin Art Week 2023.
               </p>
               <p>
-                <a
-                  href="https://ww.afroamericanafilms.com/about"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline underline-offset-2"
-                >
-                  About Cesarina Guerrero
-                </a>
+                The work explored the idea of mirrors and masks through
+                different perspectives, always in relation to a fundamental
+                concept: that there exists a kind of universal collective
+                consciousness, one that communicates through logics other
+                than the rational.
+              </p>
+              <p>
+                This culminated in a dreamlike narrative, rich in symbolism
+                signified by and significant to the group of people who
+                performed it.
               </p>
             </div>
           </motion.div>

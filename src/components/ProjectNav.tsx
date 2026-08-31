@@ -69,7 +69,7 @@ export function ProjectNav({ projects }: { projects: Project[] }) {
     <nav className="fixed top-20 left-0 right-0 z-50 flex items-center justify-center gap-12 py-4 px-8">
       <button
         onClick={fire}
-        className="font-display text-white text-[clamp(0.875rem,2.5vw,1.75rem)] tracking-tight"
+        className="font-display text-white text-[1.75rem] sm:text-[clamp(0.875rem,2.5vw,1.75rem)] tracking-tight"
       >
         {current.label}
       </button>

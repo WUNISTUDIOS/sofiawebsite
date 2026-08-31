@@ -22,7 +22,26 @@ const TRANSITION = { duration: 0.75, ease: [0.76, 0, 0.24, 1] as const };
 const THRESHOLD = 50;
 const LOCK_MS = 850;
 
+// Mirrors Tailwind's `sm` breakpoint. Below this, images are sized to the
+// display's width with natural (auto) height instead of being cropped to
+// fill the screen — the slide scrolls if that leaves the image taller than
+// the viewport, rather than clipping it with no way to see the rest.
+const MOBILE_BREAKPOINT = 640;
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+    setIsMobile(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+  return isMobile;
+}
+
 export default function GallerySlider({ slides }: { slides: Slide[] }) {
+  const isMobile = useIsMobile();
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const currentRef = useRef(0);
@@ -48,6 +67,11 @@ export default function GallerySlider({ slides }: { slides: Slide[] }) {
   }, []);
 
   useEffect(() => {
+    // Mobile renders every slide stacked in normal document flow (see
+    // below) rather than one fixed full-screen slide at a time, so there's
+    // no wheel-driven paging to intercept — let the page scroll normally.
+    if (isMobile) return;
+
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
 
@@ -69,7 +93,39 @@ export default function GallerySlider({ slides }: { slides: Slide[] }) {
 
     window.addEventListener("wheel", handleWheel, { passive: false });
     return () => window.removeEventListener("wheel", handleWheel);
-  }, [goNext, goPrev]);
+  }, [goNext, goPrev, isMobile]);
+
+  if (isMobile) {
+    // Mobile: every slide stacked in normal page flow, each sized to the
+    // display's width with natural height — no cropping, no fixed
+    // full-screen paging, just one long scrollable page.
+    return (
+      <div className="bg-black">
+        {slides.map((slide, i) =>
+          slide.type === "video" ? (
+            <video
+              key={slide.src}
+              src={withBasePath(slide.src)}
+              className="block w-full h-auto"
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          ) : (
+            <img
+              key={slide.src}
+              src={withBasePath(slide.src)}
+              alt={slide.alt}
+              className="block w-full h-auto"
+              loading={i === 0 ? "eager" : "lazy"}
+              decoding="async"
+            />
+          )
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 overflow-hidden bg-black">

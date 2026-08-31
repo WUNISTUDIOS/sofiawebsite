@@ -38,12 +38,12 @@ export default function Descent() {
       <AnimatePresence>
         {revealed && (
           <motion.div
-            className="fixed top-40 bottom-16 left-0 right-0 z-50 overflow-y-auto px-[8vw] py-8 pointer-events-none"
+            className="fixed top-40 bottom-16 left-0 right-0 z-50 flex items-center justify-center overflow-y-auto px-[8vw] py-8 pointer-events-none"
             {...fade}
             transition={fadeTransition}
           >
             <div
-              className="pointer-events-auto text-center font-display text-white text-[clamp(0.875rem,1.32vw,1.5rem)] leading-relaxed space-y-6 max-w-4xl mx-auto"
+              className="pointer-events-auto text-left font-display text-white text-[1.75rem] sm:text-[clamp(0.875rem,1.32vw,1.5rem)] leading-relaxed space-y-6 max-w-4xl mx-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <p>
@@ -52,42 +52,29 @@ export default function Descent() {
                 Riley Davidson, which offers a contemporary interpretation of the
                 Sumerian myth of Inanna&rsquo;s descent into the underworld, in
                 which the goddess Inanna travels to the realm of the
-                dead&mdash;ruled by her sister Ereshkigal&mdash;to expand her
-                power. At seven gates, her divine powers are stripped from her;
-                she is killed and hung up as a corpse.
+                dead&mdash;ruled by the sister Ereshkigal&mdash;to expand in
+                power. At seven gates, the divine powers are stripped away;
+                Inanna is killed and hung up as a corpse.
               </p>
               <p>
-                The anger, grief, loss, and power of the Sumerian myth are
-                translated into our present, into a global political situation in
-                which we are losing our rights, our very humanity, and can witness
-                this unfold directly on our screens.
+                The anger, grief, loss, and power of the Sumerian myth were
+                translated into our present.
               </p>
               <p>
-                We wanted to create a ritual space for anger and loss, but also for
-                shame and guilt; a cocoon of grief, because if we are not able to
-                make room for it, we will not be able to keep on fighting. The
-                stage was conceived as an intimate and comfortable space. There
-                were carpets and cushions, to be able to hold each other close
-                during the intensity of the ritual performance full of grief,
-                anger, shame and rage.
-              </p>
-              <p>
-                I hung branches from the ceiling because I wanted to visualize the
-                descent into the underworld, so that some remains of the upper
-                world would be suspended there. Inanna adores wine, so we placed
-                them as offerings on the different sand altars, which symbolized
-                the different gates where Inanna must surrender one of her powers.
-                For the days of the performance, they were of course filled with
-                wine. Guts were everywhere, serving to heighten the viscerality of
-                grief and alluding to the rotting, hanging corpse of Inanna.
+                Inanna adores wine, so we placed glasses as offerings on the
+                different sand altars, which symbolized the different gates
+                where Inanna must surrender one power. For the days of the
+                performance, they were of course filled with wine.
               </p>
               <p>
                 In Riley&rsquo;s adaptation of the myth, Inanna is not rescued and
-                brought back to life, but rather buried. We imagine the underworld
-                as a dry, dark, otherworldly space, so we decided to work with
-                sand to help set the burial scene and create a dusty landscape. Odd
-                objects I had found and collected from the streets were suspended or
-                laying on the floor.
+                brought back to life, but rather buried. We thought of the
+                underworld as a dry, dark, otherworldly space, so we worked with
+                sand to help set the burial scene and create a dusty landscape.
+                Special objects I had found and collected from the streets were
+                suspended or lying on the floor. Guts were everywhere,
+                heightening the viscerality of grief and alluding to the
+                rotting, hanging corpse of Inanna.
               </p>
               <p>
                 <a

@@ -26,7 +26,9 @@ const PROJECTS: Project[] = [
   { label: "Descent", href: "/descent" },
   { label: "Two Devils One Flower", href: "/two-devils-one-flower" },
   { label: "The Best Mirrors Are Those", href: "/the-best-mirrors-are-those" },
-  { label: "Acid Lake", href: "/acid-lake" },
+  { label: "El Diablo", href: "/acid-lake" },
+  { label: "La Boheme", href: "/boheme" },
+  { label: "House Keys", href: "/house-keys" },
 ];
 
 export default function RootLayout({
