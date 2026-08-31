@@ -40,7 +40,7 @@ export default function TwoDevilsOneFlower() {
             transition={fadeTransition}
           >
             <div
-              className="pointer-events-auto text-left font-display text-white text-[1.75rem] sm:text-[clamp(0.875rem,1.32vw,1.5rem)] leading-relaxed space-y-4 max-w-3xl"
+              className="pointer-events-auto text-left font-display text-white text-[clamp(0.875rem,1.32vw,1.5rem)] leading-relaxed space-y-4 max-w-3xl"
               onClick={(e) => e.stopPropagation()}
             >
               <p>

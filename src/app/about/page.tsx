@@ -17,7 +17,7 @@ export default function About() {
       <div className="absolute inset-0 z-10 bg-black/50" />
 
       <div className="absolute inset-0 z-20 flex items-center justify-center overflow-y-auto px-[8vw] py-24">
-        <div className="mx-auto max-w-3xl space-y-6 text-left font-display text-white text-[1.75rem] sm:text-[clamp(0.875rem,1.32vw,1.5rem)] leading-relaxed">
+        <div className="mx-auto max-w-3xl space-y-6 text-left font-display text-white text-[clamp(0.875rem,1.32vw,1.5rem)] leading-relaxed">
           <p>
             I have dedicated a big part of my life to performative arts.
             Today I mostly do stage and costume, though I&rsquo;ve also

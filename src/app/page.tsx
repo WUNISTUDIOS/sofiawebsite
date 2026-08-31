@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import ScrollStack from "@/components/ScrollStack";
 import { withBasePath } from "@/lib/basePath";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 const IMAGES = [
   { src: "/images/43_DSC02606_1.webp", alt: "Descent", href: "/descent" },
@@ -87,6 +88,11 @@ function HomeVideo() {
 
 export default function Home() {
   const [offset, setOffset] = useState(0);
+  // ScrollStack's paging (below) only responds to wheel events, which touch
+  // scrolling doesn't fire — on mobile there was no way to ever reach the
+  // video section. Stack both sections in normal scrollable page flow there
+  // instead, same as GallerySlider already does on mobile.
+  const isMobile = useIsMobile();
 
   return (
     <>
@@ -122,7 +128,18 @@ export default function Home() {
           />
         </svg>
       </button>
-      <ScrollStack slides={[<HomeNav key="nav" offset={offset} />, <HomeVideo key="video" />]} />
+      {isMobile ? (
+        <div className="bg-black">
+          <div className="h-screen">
+            <HomeNav offset={offset} />
+          </div>
+          <div className="h-screen">
+            <HomeVideo />
+          </div>
+        </div>
+      ) : (
+        <ScrollStack slides={[<HomeNav key="nav" offset={offset} />, <HomeVideo key="video" />]} />
+      )}
     </>
   );
 }

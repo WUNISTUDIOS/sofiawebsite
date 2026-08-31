@@ -43,7 +43,7 @@ export default function ElDiablo() {
             transition={fadeTransition}
           >
             <div
-              className="pointer-events-auto text-left font-display text-white text-[1.75rem] sm:text-[clamp(0.875rem,1.32vw,1.5rem)] leading-relaxed space-y-6 max-w-4xl mx-auto"
+              className="pointer-events-auto text-left font-display text-white text-[clamp(0.875rem,1.32vw,1.5rem)] leading-relaxed space-y-6 max-w-4xl mx-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <p>

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { withBasePath } from "@/lib/basePath";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 export interface Slide {
   src: string;
@@ -21,24 +22,6 @@ const variants = {
 const TRANSITION = { duration: 0.75, ease: [0.76, 0, 0.24, 1] as const };
 const THRESHOLD = 50;
 const LOCK_MS = 850;
-
-// Mirrors Tailwind's `sm` breakpoint. Below this, images are sized to the
-// display's width with natural (auto) height instead of being cropped to
-// fill the screen — the slide scrolls if that leaves the image taller than
-// the viewport, rather than clipping it with no way to see the rest.
-const MOBILE_BREAKPOINT = 640;
-
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
-    setIsMobile(mql.matches);
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mql.addEventListener("change", handler);
-    return () => mql.removeEventListener("change", handler);
-  }, []);
-  return isMobile;
-}
 
 export default function GallerySlider({ slides }: { slides: Slide[] }) {
   const isMobile = useIsMobile();
