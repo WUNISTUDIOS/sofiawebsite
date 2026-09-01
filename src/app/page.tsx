@@ -67,7 +67,7 @@ function HomeNav({
         transition={instant ? { duration: 0 } : { duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.2}
+        dragElastic={0}
         onDragEnd={(_, info) => {
           const THRESHOLD = 40;
           if (info.offset.x < -THRESHOLD) onSwipe(1);
