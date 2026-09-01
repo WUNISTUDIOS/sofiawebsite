@@ -6,11 +6,11 @@ import GallerySlider, { Slide } from "@/components/GallerySlider";
 import { useProjectToggle } from "@/components/ProjectNav";
 
 const SLIDES: Slide[] = [
+  { src: "/images/Boheme/DSC_8484.webp", alt: "Boheme 5" },
   { src: "/images/Boheme/DSC_8420.webp", alt: "Boheme 1" },
   { src: "/images/Boheme/DSC_8421.webp", alt: "Boheme 2" },
   { src: "/images/Boheme/DSC_8431.webp", alt: "Boheme 3" },
   { src: "/images/Boheme/DSC_8456.webp", alt: "Boheme 4" },
-  { src: "/images/Boheme/DSC_8484.webp", alt: "Boheme 5" },
   { src: "/images/Boheme/DSC_8574.webp", alt: "Boheme 6" },
   { src: "/images/Boheme/DSC_8588.webp", alt: "Boheme 7" },
   { src: "/images/Boheme/DSC_8599.webp", alt: "Boheme 8" },

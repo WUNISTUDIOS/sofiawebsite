@@ -15,7 +15,7 @@ export function SiteHeader() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between py-4 px-8">
       <Link href="/" className={nameClass}>
-        Sofía Loose Martínez de Castro
+        Diablo con Vestido
       </Link>
 
       {isAbout ? (

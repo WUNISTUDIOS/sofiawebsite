@@ -18,12 +18,22 @@ const TRANSITION = { duration: 0.75, ease: [0.76, 0, 0.24, 1] as const };
 const THRESHOLD = 50;
 const LOCK_MS = 850;
 
-export default function ScrollStack({ slides }: { slides: ReactNode[] }) {
+export default function ScrollStack({
+  slides,
+  onSlideChange,
+}: {
+  slides: ReactNode[];
+  onSlideChange?: (index: number) => void;
+}) {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const currentRef = useRef(0);
   const isAnimating = useRef(false);
   const accumulated = useRef(0);
+
+  useEffect(() => {
+    onSlideChange?.(current);
+  }, [current, onSlideChange]);
 
   const goNext = useCallback(() => {
     if (isAnimating.current || currentRef.current >= slides.length - 1) return;

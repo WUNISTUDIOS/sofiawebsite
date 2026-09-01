@@ -5,12 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import GallerySlider, { Slide } from "@/components/GallerySlider";
 import { useProjectToggle } from "@/components/ProjectNav";
 
-const SLIDES: Slide[] = [
-  { src: "/video/vertical.webm", alt: "House Keys", type: "video" },
-  { src: "/images/housekeys/C0099T01.webp", alt: "House Keys 1" },
-  { src: "/images/housekeys/DSC00649.webp", alt: "House Keys 2" },
-  { src: "/images/housekeys/houskeys_thread_image.webp", alt: "House Keys 3" },
-];
+const SLIDES: Slide[] = [{ src: "/video/vertical.webm", alt: "House Keys", type: "video" }];
 
 const fade = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } };
 const fadeTransition = { duration: 0.4 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -33,23 +33,50 @@ const IMAGES = [
 // adding more projects doesn't keep squeezing them narrower — instead, only
 // VISIBLE_COUNT are ever on screen at once (100vw / THUMB_VW), and the < >
 // buttons page through the rest by shifting the strip one thumbnail at a
-// time. `offset` is how many thumbnails have been scrolled past; it's
-// clamped so you can't page past either end.
+// time.
 const THUMB_VW = 25;
-const VISIBLE_COUNT = Math.floor(100 / THUMB_VW);
-const MAX_OFFSET = Math.max(0, IMAGES.length - VISIBLE_COUNT);
+const N = IMAGES.length;
 
-function HomeNav({ offset }: { offset: number }) {
+// The strip loops: rather than clamping `step` (which would force the x
+// animation to jump backward at the ends) or wrapping it with a modulo
+// (same jump, just at a different point), IMAGES is tiled several times and
+// `step` is left free to grow in whichever direction is being clicked — the
+// strip always keeps moving the way you're pressing. Once `step` drifts a
+// full loop (N) away from center, it's snapped back by exactly N with the
+// transition disabled for that one update; since the tiled content repeats
+// every N thumbnails, the frame before and after the snap is pixel-identical,
+// so the reset is invisible and motion never visibly reverses.
+const TILES = 5;
+const CENTER = Math.floor(TILES / 2) * N;
+const TILED_IMAGES = Array.from({ length: TILES }, () => IMAGES).flat();
+
+function HomeNav({
+  step,
+  instant,
+  onSwipe,
+}: {
+  step: number;
+  instant: boolean;
+  onSwipe: (dir: 1 | -1) => void;
+}) {
   return (
     <div className="h-full w-full overflow-hidden bg-black">
       <motion.div
         className="flex h-full"
-        animate={{ x: `-${offset * THUMB_VW}vw` }}
-        transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+        animate={{ x: `-${(CENTER + step) * THUMB_VW}vw` }}
+        transition={instant ? { duration: 0 } : { duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.2}
+        onDragEnd={(_, info) => {
+          const THRESHOLD = 40;
+          if (info.offset.x < -THRESHOLD) onSwipe(1);
+          else if (info.offset.x > THRESHOLD) onSwipe(-1);
+        }}
       >
-        {IMAGES.map((img) => (
+        {TILED_IMAGES.map((img, i) => (
           <Link
-            key={img.href}
+            key={`${img.href}-${i}`}
             href={img.href}
             className="relative block h-full shrink-0"
             style={{ width: `${THUMB_VW}vw` }}
@@ -59,10 +86,9 @@ function HomeNav({ offset }: { offset: number }) {
               alt={img.alt}
               fill
               className="object-cover brightness-[0.8]"
-              // All 6 are eagerly loaded (not just the first) — otherwise a
-              // thumbnail past the initial 4 only starts fetching the moment
-              // the < > buttons scroll it into view, popping in mid-slide
-              // instead of sliding in smoothly already loaded.
+              // All copies within one loop's reach are eagerly loaded —
+              // otherwise a thumbnail scrolled into view mid-slide pops in
+              // instead of already being loaded.
               priority
               sizes={`${THUMB_VW}vw`}
             />
@@ -87,58 +113,103 @@ function HomeVideo() {
 }
 
 export default function Home() {
-  const [offset, setOffset] = useState(0);
   // ScrollStack's paging (below) only responds to wheel events, which touch
   // scrolling doesn't fire — on mobile there was no way to ever reach the
   // video section. Stack both sections in normal scrollable page flow there
   // instead, same as GallerySlider already does on mobile.
   const isMobile = useIsMobile();
 
+  const [step, setStep] = useState(0);
+  const [instant, setInstant] = useState(false);
+  const recenterTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // The < > arrows only apply to the thumbnail strip, so they're hidden once
+  // the video is in view — desktop learns this from ScrollStack's slide
+  // index, mobile (stacked in normal scroll flow) from scroll position.
+  const [onNav, setOnNav] = useState(true);
+  const handleSlideChange = useCallback((index: number) => setOnNav(index === 0), []);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    const handleScroll = () => setOnNav(window.scrollY < window.innerHeight / 2);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isMobile]);
+
+  const go = useCallback((dir: 1 | -1) => {
+    if (recenterTimer.current) clearTimeout(recenterTimer.current);
+    setInstant(false);
+    setStep((s) => s + dir);
+  }, []);
+
+  // Once the strip has drifted a full loop from center, snap it back by one
+  // loop right after the click's own animation finishes — invisibly, since
+  // the tiled content repeats every N thumbnails.
+  useEffect(() => {
+    if (Math.abs(step) < N) return;
+    recenterTimer.current = setTimeout(() => {
+      setInstant(true);
+      setStep((s) => s - Math.sign(s) * N);
+    }, 800);
+    return () => {
+      if (recenterTimer.current) clearTimeout(recenterTimer.current);
+    };
+  }, [step]);
+
   return (
     <>
-      <button
-        onClick={() => setOffset((o) => Math.max(0, o - 1))}
-        disabled={offset === 0}
-        aria-label="Previous"
-        className="fixed left-4 top-1/2 -translate-y-1/2 z-50 text-white disabled:opacity-30"
-      >
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M15 6 L9 12 L15 18"
-            stroke="currentColor"
-            strokeWidth="1"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
-      <button
-        onClick={() => setOffset((o) => Math.min(MAX_OFFSET, o + 1))}
-        disabled={offset === MAX_OFFSET}
-        aria-label="Next"
-        className="fixed right-4 top-1/2 -translate-y-1/2 z-50 text-white disabled:opacity-30"
-      >
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M9 6 L15 12 L9 18"
-            stroke="currentColor"
-            strokeWidth="1"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
+      {onNav && (
+        <>
+          <button
+            onClick={() => go(-1)}
+            aria-label="Previous"
+            className="fixed left-4 top-1/2 -translate-y-1/2 z-50 text-white"
+          >
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M15 6 L9 12 L15 18"
+                stroke="currentColor"
+                strokeWidth="1"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+          <button
+            onClick={() => go(1)}
+            aria-label="Next"
+            className="fixed right-4 top-1/2 -translate-y-1/2 z-50 text-white"
+          >
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M9 6 L15 12 L9 18"
+                stroke="currentColor"
+                strokeWidth="1"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </>
+      )}
       {isMobile ? (
         <div className="bg-black">
           <div className="h-screen">
-            <HomeNav offset={offset} />
+            <HomeNav step={step} instant={instant} onSwipe={go} />
           </div>
           <div className="h-screen">
             <HomeVideo />
           </div>
         </div>
       ) : (
-        <ScrollStack slides={[<HomeNav key="nav" offset={offset} />, <HomeVideo key="video" />]} />
+        <ScrollStack
+          onSlideChange={handleSlideChange}
+          slides={[
+            <HomeNav key="nav" step={step} instant={instant} onSwipe={go} />,
+            <HomeVideo key="video" />,
+          ]}
+        />
       )}
     </>
   );
