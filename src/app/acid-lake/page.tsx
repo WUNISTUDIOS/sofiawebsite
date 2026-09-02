@@ -9,9 +9,9 @@ const SLIDES: Slide[] = [
   { src: "/video/diablo_behindthescenes.webm", alt: "El Diablo behind the scenes", type: "video" },
   { src: "/images/DiabloVr/horizontal_performance.webp", alt: "El Diablo performance 1" },
   { src: "/images/DiabloVr/horizontal_performance1.webp", alt: "El Diablo performance 2" },
+  { src: "/images/DiabloVr/horizontal_performance2.webp", alt: "El Diablo performance 3" },
   { src: "/images/DiabloVr/IMG_3837.webp", alt: "El Diablo VR headset 1" },
   { src: "/images/DiabloVr/IMG_3834.webp", alt: "El Diablo VR headset 2" },
-  { src: "/images/DiabloVr/horizontal_performance2.webp", alt: "El Diablo performance 3" },
   { src: "/images/acid_1.webp", alt: "El Diablo 1" },
   { src: "/images/acid_2.webp", alt: "El Diablo 2" },
 ];

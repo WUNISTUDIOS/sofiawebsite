@@ -6,8 +6,9 @@ import GallerySlider, { Slide } from "@/components/GallerySlider";
 import { useProjectToggle } from "@/components/ProjectNav";
 
 const SLIDES: Slide[] = [
-  { src: "/images/horizontal_opcion3-Recovered.webp", alt: "Two Devils One Flower 1" },
-  { src: "/images/horizontal_opcion4-Recovered.webp", alt: "Two Devils One Flower 2" },
+  { src: "/images/masks/horizontal_2devils1flower.webp", alt: "Two Devils One Flower 1" },
+  { src: "/images/masks/horizontal_2devils1flower_1.webp", alt: "Two Devils One Flower 2" },
+  { src: "/images/masks/horizontal_2devils1flower_2.webp", alt: "Two Devils One Flower 3" },
 ];
 
 const fade = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } };

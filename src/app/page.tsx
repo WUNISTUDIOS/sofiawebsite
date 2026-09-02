@@ -9,24 +9,37 @@ import { withBasePath } from "@/lib/basePath";
 import { useIsMobile } from "@/lib/useIsMobile";
 
 const IMAGES = [
-  { src: "/images/43_DSC02606_1.webp", alt: "Descent", href: "/descent" },
+  {
+    src: "/images/Boheme/DSC_8456.webp",
+    alt: "La Boheme",
+    href: "/boheme",
+    title: "La Boheme",
+  },
+  {
+    src: "/images/housekeys/DSC00649.webp",
+    alt: "House Keys",
+    href: "/house-keys",
+    title: "House Keys",
+  },
+  { src: "/images/43_DSC02606_1.webp", alt: "Descent", href: "/descent", title: "Descent" },
   {
     src: "/images/AcidLakeHome.webp",
     alt: "Two figures in white beneath a tree",
     href: "/acid-lake",
+    title: "El Diablo",
   },
   {
     src: "/images/5_DSC_7641_1_1.webp",
     alt: "Two Devils One Flower",
     href: "/two-devils-one-flower",
+    title: "Two Devils One Flower",
   },
   {
     src: "/images/33_IMG_9459_1.webp",
     alt: "The Best Mirrors Are Those",
     href: "/the-best-mirrors-are-those",
+    title: "The Best Mirrors Are Those",
   },
-  { src: "/images/Boheme/DSC_8456.webp", alt: "La Boheme", href: "/boheme" },
-  { src: "/images/housekeys/DSC00649.webp", alt: "House Keys", href: "/house-keys" },
 ];
 
 // Each thumbnail keeps a fixed width (vs. dividing evenly by count), so
@@ -92,6 +105,17 @@ function HomeNav({
               priority
               sizes={`${THUMB_VW}vw`}
             />
+            {/* Lives inside the same Link as its thumbnail, so it's carried
+                along by the strip's animation and never drifts from its own
+                image — including mid-slide when the < > buttons fire. The
+                gradient runs all the way to the image's true bottom edge;
+                only the text itself sits higher (pb-16), clear of the fixed
+                footer. */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent pt-16 pb-16 px-3">
+              <span className="font-display text-white text-[clamp(0.7rem,1.4vw,1.1rem)] tracking-tight">
+                {img.title}
+              </span>
+            </div>
           </Link>
         ))}
       </motion.div>
